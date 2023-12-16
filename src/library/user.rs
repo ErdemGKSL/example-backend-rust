@@ -79,7 +79,7 @@ pub fn add_user(name: String, email: String, password: String) {
 	unsafe {
 		initialize_users();
 		USERS.as_mut().unwrap().push(User::new(
-			USERS.as_ref().unwrap().last().unwrap().id as i32 + 1,
+			USERS.as_ref().unwrap().last().unwrap().id + 1,
 			name,
 			email,
 			password,
