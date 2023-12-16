@@ -1,13 +1,21 @@
 use axum::extract::Json;
-use serde_json::Value;
+use serde_json::{Value, json};
 use serde::{Deserialize, Serialize};
 
 use crate::library::user::{add_user, get_users};
 
 pub async fn trigger(Json(user): Json<UserCreate>) -> Json<Value> {
   add_user(user.name, user.email, user.password);
+  let user_opt = get_users().last();
 
-  return Json(get_users().last().unwrap().to_json());
+  if let Some(user) = user_opt {
+      Json(user.to_json())
+  } else {
+      Json(json!({
+          "error": "User not found"
+      }))
+  }
+  
 }
 
 #[derive(Debug, Serialize, Deserialize)]
