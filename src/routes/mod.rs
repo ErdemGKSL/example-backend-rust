@@ -8,7 +8,5 @@ pub fn get_router() -> Router {
   Router::new()
     .nest("/user", user::get_router())
     .nest("/users", users::get_router())
-    .layer(
-      CorsLayer::very_permissive()
-    )
+    .layer(CorsLayer::very_permissive())
 }
